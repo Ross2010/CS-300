@@ -1,4 +1,4 @@
-Journal 
+Reflection Journal 
 
 What was the problem you were solving in the projects for this course?
 The goal of the project was to build an efficient advising tool for the Computer Science department at ABCU. The system needed to manage a large set of course data, read it from a CSV file, and allow advisors to view a complete, alphabetically sorted list of courses as well as search for specific courses. It also needed to correctly display prerequisite chains for each course, which added another layer of complexity.
