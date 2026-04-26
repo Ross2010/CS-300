@@ -239,9 +239,12 @@ int main() {
     string searchId;
     int choice = 0;
 
+    bool dataLoaded = false;  //track whether file was loaded
+
     cout << "Welcome to the ABCU Course Planner." << endl << endl;
 
     while (choice != 9) {
+
         cout << "  1. Load Data Structure." << endl;
         cout << "  2. Print Course List." << endl;
         cout << "  3. Print Course." << endl;
@@ -260,33 +263,48 @@ int main() {
         switch (choice) {
 
         case 1:
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); /////
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Enter file name: ";
-            //cin.ignore();
             getline(cin, filename);
+
             loadCourses(filename, bst);
+
+            dataLoaded = true;  // mark data as loaded
+
             break;
 
         case 2:
+            if (!dataLoaded) {   //enforce load-first rule
+                cout << "Please load the data first (option 1)." << endl;
+                break;
+            }
+
             cout << "Here is a sample schedule:" << endl;
             bst->PrintInOrder();
             break;
 
         case 3:
+            if (!dataLoaded) {   //  load-first rule
+                cout << "Please load the data first (option 1)." << endl;
+                break;
+            }
+
             cout << "What course do you want to know about? ";
             cin >> searchId;
 
             // Convert input to uppercase
-            transform(searchId.begin(), searchId.end(), searchId.begin(), ::toupper);
+            transform(searchId.begin(), searchId.end(),
+                      searchId.begin(), ::toupper);
 
             {
                 Course course = bst->Search(searchId);
 
                 if (!course.courseNumber.empty()) {
                     displayCourse(course, bst);
-                } else {
-                    cout << "Course " << searchId << " not found." << endl;
                 }
+                else {
+                    cout << "Course " << searchId << " not found." << endl;
+                }3
             }
             break;
 
